@@ -55,6 +55,9 @@ $config = [
 		'admin' => [
 			'class' => 'app\modules\admin\Module',
 		],
+		'observer' => [
+			'class' => 'app\modules\observer\Module',
+		],
 	],
     'params' => $params,
 ];
