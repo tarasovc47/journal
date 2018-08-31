@@ -58,6 +58,12 @@ $config = [
 		'observer' => [
 			'class' => 'app\modules\observer\Module',
 		],
+		'executor' => [
+			'class' => 'app\modules\executor\Module',
+		],
+		'operator' => [
+			'class' => 'app\modules\operator\Module',
+		],
 	],
     'params' => $params,
 ];
