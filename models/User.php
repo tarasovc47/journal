@@ -9,10 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
- * @property int $is_admin
- * @property int $is_operator
- * @property int $is_executor
- * @property int $is_observer
+ * @property string $role
  *
  * @property Comment[] $comments
  */
@@ -32,8 +29,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string'],
-            [['is_admin', 'is_operator', 'is_executor', 'is_observer'], 'integer'],
+            [['name', 'role'], 'string'],
         ];
     }
 
@@ -45,10 +41,7 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'is_admin' => 'Is Admin',
-            'is_operator' => 'Is Operator',
-            'is_executor' => 'Is Executor',
-            'is_observer' => 'Is Observer',
+            'role' => 'Role',
         ];
     }
 

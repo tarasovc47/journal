@@ -15,10 +15,7 @@ class m180830_053412_create_users_table extends Migration
         $this->createTable('user', [
             'id' => $this->primaryKey(),
 	        'name' => $this->text(),
-	        'is_admin' => $this->boolean(),
-	        'is_operator' => $this->boolean(),
-	        'is_executor' => $this->boolean(),
-	        'is_observer' => $this->boolean()
+	        'role' => $this->text()
         ]);
     }
 

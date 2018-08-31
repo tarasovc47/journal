@@ -4,21 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Trouble */
+/* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="trouble-form">
+<div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'physical_address')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'name')->textarea(['rows' => 1]) ?>
 
-    <?= $form->field($model, 'ip_address')->textInput() ?>
-
-	<?= $form->field($model, 'deadline')->textInput() ?>
-
-    <?= $form->field($model, 'stages')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'role')->listBox(
+			array('1'=>"Администратор",2=>"Наблюдатель",3=>"Исполнитель",4=>"Оператор"))
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

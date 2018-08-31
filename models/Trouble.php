@@ -33,10 +33,10 @@ class Trouble extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['physical_address', 'executor', 'operator', 'ip_address'], 'string'],
-            [['deadline'], 'safe'],
-            [['stages'], 'string', 'max' => 255],
-        ];
+            [['physical_address', 'executor', 'ip_address', 'stages'], 'string'],
+	        //[['physical_address', 'executor', 'ip-address', 'stages', 'deadline'], 'required'],
+	        [['deadline'], 'date', 'format'=>'php:Y-m-d'],
+	        [['deadline'], 'default', 'value' => date('Y-m-d')]];
     }
 
     /**
