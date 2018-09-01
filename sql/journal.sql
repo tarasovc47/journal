@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 30 2018 г., 09:22
+-- Время создания: Сен 01 2018 г., 07:41
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -51,10 +51,10 @@ CREATE TABLE `migration` (
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1535609655),
-('m180830_053357_create_trouble_table', 1535609657),
-('m180830_053412_create_users_table', 1535609657),
-('m180830_055022_create_comment_table', 1535609657);
+('m000000_000000_base', 1535776463),
+('m180830_053357_create_trouble_table', 1535776465),
+('m180830_053412_create_users_table', 1535776465),
+('m180830_055022_create_comment_table', 1535776465);
 
 -- --------------------------------------------------------
 
@@ -81,11 +81,19 @@ CREATE TABLE `trouble` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `name` text,
-  `is_admin` tinyint(1) DEFAULT NULL,
-  `is_operator` tinyint(1) DEFAULT NULL,
-  `is_executor` tinyint(1) DEFAULT NULL,
-  `is_observer` tinyint(1) DEFAULT NULL
+  `password` text,
+  `role` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `password`, `role`) VALUES
+(5, 'Администратор', NULL, 'admin'),
+(6, 'Наблюдатель', NULL, 'observer'),
+(7, 'Исполнитель', NULL, 'executor'),
+(8, 'Оператор', NULL, 'operator');
 
 --
 -- Индексы сохранённых таблиц
@@ -137,7 +145,7 @@ ALTER TABLE `trouble`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

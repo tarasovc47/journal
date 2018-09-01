@@ -15,6 +15,7 @@ class m180830_053412_create_users_table extends Migration
         $this->createTable('user', [
             'id' => $this->primaryKey(),
 	        'name' => $this->text(),
+	        'password' => $this->text(),
 	        'role' => $this->text()
         ]);
     }

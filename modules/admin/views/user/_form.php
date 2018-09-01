@@ -14,8 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textarea(['rows' => 1]) ?>
 
+	<?= $form->field($model, 'password')->passwordInput() ?>
+
     <?= $form->field($model, 'role')->listBox(
-			array('1'=>"Администратор",2=>"Наблюдатель",3=>"Исполнитель",4=>"Оператор"))
+			array('admin'=>"Администратор",'observer'=>"Наблюдатель",'executor'=>"Исполнитель",'operator'=>"Оператор"))
     ?>
 
     <div class="form-group">
