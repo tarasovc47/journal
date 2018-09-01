@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\UserGroup;
+use app\models\Group;
 
 /**
- * GroupSearch represents the model behind the search form of `app\models\UserGroup`.
+ * GroupSearch represents the model behind the search form of `app\models\Group`.
  */
-class GroupSearch extends UserGroup
+class GroupSearch extends Group
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class GroupSearch extends UserGroup
      */
     public function search($params)
     {
-        $query = UserGroup::find();
+        $query = Group::find();
 
         // add conditions that should always apply here
 

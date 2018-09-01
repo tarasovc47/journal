@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $groupname
  */
-class UserGroup extends \yii\db\ActiveRecord
+class Group extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

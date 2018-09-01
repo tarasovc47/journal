@@ -31,8 +31,7 @@ class Trouble extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['physical_address', 'executor', 'author'], 'string'],
-            [['ip_address'], 'integer'],
+            [['physical_address', 'executor', 'author', 'ip_address'], 'string'],
             [['deadline'], 'safe'],
             [['stages'], 'string', 'max' => 255],
         ];
