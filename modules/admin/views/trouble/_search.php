@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'executor') ?>
 
-    <?= $form->field($model, 'operator') ?>
+    <?= $form->field($model, 'author') ?>
 
     <?php // echo $form->field($model, 'deadline') ?>
 

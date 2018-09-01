@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'physical_address:ntext',
             'ip_address',
             'executor:ntext',
-            'operator:ntext',
+            'author:ntext',
             //'deadline',
             //'stages',
 

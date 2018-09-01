@@ -19,7 +19,7 @@ class TroubleSearch extends Trouble
     {
         return [
             [['id', 'ip_address'], 'integer'],
-            [['physical_address', 'executor', 'operator', 'deadline', 'stages'], 'safe'],
+            [['physical_address', 'executor', 'author', 'deadline', 'stages'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class TroubleSearch extends Trouble
 
         $query->andFilterWhere(['like', 'physical_address', $this->physical_address])
             ->andFilterWhere(['like', 'executor', $this->executor])
-            ->andFilterWhere(['like', 'operator', $this->operator])
+            ->andFilterWhere(['like', 'author', $this->author])
             ->andFilterWhere(['like', 'stages', $this->stages]);
 
         return $dataProvider;

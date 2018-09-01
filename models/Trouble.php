@@ -11,7 +11,7 @@ use Yii;
  * @property string $physical_address
  * @property int $ip_address
  * @property string $executor
- * @property string $operator
+ * @property string $author
  * @property string $deadline
  * @property string $stages
  *
@@ -49,7 +49,7 @@ class Trouble extends \yii\db\ActiveRecord
             'physical_address' => 'Physical Address',
             'ip_address' => 'Ip Address',
             'executor' => 'Executor',
-            'operator' => 'Operator',
+            'author' => 'author',
             'deadline' => 'Deadline',
             'stages' => 'Stages',
         ];
