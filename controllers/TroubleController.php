@@ -85,10 +85,9 @@ class TroubleController extends Controller
 		$searchModel = new TroubleSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		return $this->render('index', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $dataProvider,
-		]);
+		$damageStages = Trouble::getTroubleStages();
+
+		return $this->render('index', compact('searchModel', 'dataProvider', 'damageStages'));
 	}
 
     /**

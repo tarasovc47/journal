@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
-use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TroubleSearch */
@@ -30,7 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'physical_address:ntext',
             'ip_address',
-            'executor:ntext',
+            [
+                'attribute' => 'executor',
+	            'value' => function($searchModel) {
+    	            return $searchModel->exec->name ?? null;
+	            }
+            ],
+	        [
+                'attribute' => 'stages',
+		        'value' => function($searchModel) use ($damageStages) {
+    	            return $damageStages[$searchModel->stages] ?? '';
+		        }
+	        ],
             'author:ntext',
             //'deadline',
             //'stages',

@@ -4,6 +4,7 @@ use app\models\User;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Trouble;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Trouble */
@@ -19,7 +20,7 @@ use yii\widgets\ActiveForm;
     //$model->executor=User::getExecutor();
     ?>
 
-    <?= $form->field($model, 'physical_address')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'physical_address')->textInput() ?>
 
     <?= $form->field($model, 'ip_address')->textInput() ?>
 
@@ -30,11 +31,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'deadline')->textInput() ?>
 
-	<?= $form->field($model, 'comment')->textInput() ?>
+	<?= $form->field($model, 'comment')->textarea() ?>
 
     <?/*= $form->field($model, 'stages')->dropDownList(Trouble::getStages()) */?>
 
-	<?= $form->field($model, 'stages')->textInput() ?>
+	<?= $form->field($model, 'stages')->dropDownList(Trouble::getTroubleStages()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
