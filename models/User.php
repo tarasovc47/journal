@@ -2,6 +2,7 @@
 namespace app\models;
 use Yii;
 use yii\web\IdentityInterface;
+
 /**
  * This is the model class for table "user".
  *
@@ -26,7 +27,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	public function rules()
 	{
 		return [
-			[['name', 'role'], 'string'],
+			[['name', 'password', 'role'], 'string'],
 		];
 	}
 	/**
@@ -37,6 +38,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 		return [
 			'id' => 'ID',
 			'name' => 'Name',
+			'password' => 'Password',
 			'role' => 'Role',
 		];
 	}
@@ -81,11 +83,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 	public static function getRole()
 	{
-		$executorList = (new \yii\db\Query())
-			->select(['id', 'name'])
-			->from('user')
-			->where(['role' => 'executor'])
-			->all();
-		return $executorList;
+		$role = [
+			'administrator'=>'Администратор',
+			'observer'=>'Наблюдатель',
+			'executor'=>'Исполнитель',
+			'operator'=>'Оператор',
+		];
+		return $role;
 	}
 }
