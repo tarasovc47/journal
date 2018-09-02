@@ -60,15 +60,4 @@ class Trouble extends \yii\db\ActiveRecord
             'stages' => 'Stages',
         ];
     }
-	/*public static function getStages()
-	{
-		$stages = [
-			'create'=>'Создана',
-			'work'=>'В работе',
-			'finish'=>'Решена',
-			'canceled'=>'Отменена',
-			'closed'=>'Закрыта'
-		];
-		return $stages;
-	}*/
 }

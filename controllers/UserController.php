@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\LoginForm;
+use app\extensions\Access;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -27,6 +29,21 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+	        'access' =>  [
+		        'class' => AccessControl::className(),
+//		        'only' => ['create', 'update'],
+		        'denyCallback' => function($rule, $action){
+			        throw new ForbiddenHttpException('Доступ запрещён!');
+		        },
+		        'rules' => [
+			        [    //разрешаем доступ целиком к модулю users только админу
+				        'allow' => true,
+				        'matchCallback' => function($rule, $action){
+					        return Access::checkAccess([User::ROLE_ADMIN]);
+				        }
+			        ],
+		        ]
+	        ],
         ];
     }
 
@@ -39,23 +56,10 @@ class UserController extends Controller
 		$searchModel = new UserSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		if (!Yii::$app->user->isGuest) {
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
-		}
-		else
-		{
-			$model = new LoginForm();
-			if ($model->load(Yii::$app->request->post()) && $model->login()) {
-				return $this->goBack();
-			}
-			$model->password = '';
-			return $this->render('../auth/login', [
-				'model' => $model,
-			]);
-		}
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
 	}
 
     /**

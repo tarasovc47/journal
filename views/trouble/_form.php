@@ -1,13 +1,14 @@
 <?php
 
 use app\models\User;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Trouble;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Trouble */
 /* @var $form yii\widgets\ActiveForm */
+//var_dump(ArrayHelper::map(User::getExecutor(), 'id', 'name'));die;
 ?>
 
 <div class="trouble-form">
@@ -22,7 +23,8 @@ use app\models\Trouble;
 
     <?= $form->field($model, 'ip_address')->textInput() ?>
 
-    <?= $form->field($model, 'executor')->textInput() ?>
+    <?= $form->field($model, 'executor')
+	    ->dropDownList(ArrayHelper::map(User::getExecutor(), 'id', 'name'), []) ?>
 
 	<?= $form->field($model, 'author')->hiddenInput()->label(false)?>
 

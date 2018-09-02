@@ -14,6 +14,12 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+	/** Роли */
+	const ROLE_ADMIN = 0;
+	const ROLE_OBSERVER = 1;
+	const ROLE_EXECUTOR = 2;
+	const ROLE_OPERATOR = 3;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -81,20 +87,21 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	{
 		// TODO: Implement validateAuthKey() method.
 	}
-	public static function getRole()
+	public static function getRoles()
 	{
-		$role = [
-			'administrator'=>'Администратор',
-			'observer'=>'Наблюдатель',
-			'executor'=>'Исполнитель',
-			'operator'=>'Оператор',
+		return [
+			self::ROLE_ADMIN => 'Администратор',
+			self::ROLE_OBSERVER => 'Наблюдатель',
+			self::ROLE_EXECUTOR => 'Исполнитель',
+			self::ROLE_OPERATOR => 'Оператор'
 		];
-		return $role;
 	}
+
+	/**
+	 * @return User[]
+	 */
 	public static function getExecutor()
 	{
-		/*$executors = User::findAll('role' => 'executor')
-		var_dump($executors);
-		return $executors;*/
+		return self::findAll(['role' => self::ROLE_EXECUTOR]);
 	}
 }

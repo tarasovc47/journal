@@ -2,13 +2,15 @@
 
 namespace app\controllers;
 
+use app\extensions\Access;
 use app\models\LoginForm;
 use app\models\User;
-use app\models\UserSearch;
 use Yii;
 use app\models\Trouble;
 use app\models\TroubleSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -29,6 +31,48 @@ class TroubleController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+	        'access' =>  [
+		        'class' => AccessControl::className(),
+//		        'only' => ['index', 'update', 'create', 'delete', 'update'],
+		        'denyCallback' => function($rule, $action){
+			        throw new ForbiddenHttpException('Доступ запрещён!');
+		        },
+		        'rules' => [
+			        [    //разрешаем доступ модулю trouble просмотру списка аварий только зарегистрированным пользователям
+				        'allow' => true,
+				        'actions' => ['index'],
+				        'roles' => ['@']
+			        ],
+			        [   //разрешаем админу всё, кроме удаления
+				        'allow' => true,
+				        'actions' => ['create', 'view', 'update'],
+				        'matchCallback' => function($rule, $action){
+					        return Access::checkAccess([User::ROLE_ADMIN]);
+				        }
+			        ],
+			        [   //запрещаем доступ к созданию аварий для операторов и исполнителей
+			        	'allow' => false,
+				        'actions' => ['create', 'delete'],
+				        'matchCallback' => function($rule, $action){
+					        return Access::checkAccess([User::ROLE_OPERATOR, User::ROLE_EXECUTOR]);
+				        }
+			        ],
+			        [   //разрешаем доступ к созданию аварий только наблюдателю
+				        'allow' => true,
+				        'actions' => ['create', 'view', 'update'],
+				        'matchCallback' => function($rule, $action){
+					        return Access::checkAccess([User::ROLE_OBSERVER]);
+				        }
+			        ],
+			        [   //разрешаем доступ к просмотру аварии для операторов и исполнителей
+				        'allow' => true,
+				        'actions' => ['view'],
+				        'matchCallback' => function($rule, $action){
+					        return Access::checkAccess([User::ROLE_OPERATOR, User::ROLE_EXECUTOR]);
+				        }
+			        ]
+		        ]
+	        ],
         ];
     }
 
@@ -41,23 +85,10 @@ class TroubleController extends Controller
 		$searchModel = new TroubleSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-		if (!Yii::$app->user->isGuest) {
-			return $this->render('index', [
-				'searchModel' => $searchModel,
-				'dataProvider' => $dataProvider,
-			]);
-		}
-		else
-		{
-			$model = new LoginForm();
-			if ($model->load(Yii::$app->request->post()) && $model->login()) {
-				return $this->goBack();
-			}
-			$model->password = '';
-			return $this->render('../auth/login', [
-				'model' => $model,
-			]);
-		}
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
 	}
 
     /**

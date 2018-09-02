@@ -17,7 +17,7 @@ use app\models\User;
 
     <?= $form->field($model, 'password')->passwordInput() ?>
 
-	<?= $form->field($model, 'role')->dropDownList(User::getRole());
+	<?= $form->field($model, 'role')->dropDownList(User::getRoles());
 	?>
 
     <div class="form-group">
