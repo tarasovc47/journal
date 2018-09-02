@@ -2,6 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
+use app\models\User;
+use app\models\UserSearch;
 use Yii;
 use app\models\Trouble;
 use app\models\TroubleSearch;
@@ -33,16 +36,29 @@ class TroubleController extends Controller
      * Lists all Trouble models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new TroubleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+	public function actionIndex()
+	{
+		$searchModel = new TroubleSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+		if (!Yii::$app->user->isGuest) {
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		}
+		else
+		{
+			$model = new LoginForm();
+			if ($model->load(Yii::$app->request->post()) && $model->login()) {
+				return $this->goBack();
+			}
+			$model->password = '';
+			return $this->render('../auth/login', [
+				'model' => $model,
+			]);
+		}
+	}
 
     /**
      * Displays a single Trouble model.

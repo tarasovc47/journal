@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -33,16 +34,29 @@ class UserController extends Controller
      * Lists all User models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+	public function actionIndex()
+	{
+		$searchModel = new UserSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+		if (!Yii::$app->user->isGuest) {
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+			]);
+		}
+		else
+		{
+			$model = new LoginForm();
+			if ($model->load(Yii::$app->request->post()) && $model->login()) {
+				return $this->goBack();
+			}
+			$model->password = '';
+			return $this->render('../auth/login', [
+				'model' => $model,
+			]);
+		}
+	}
 
     /**
      * Displays a single User model.
