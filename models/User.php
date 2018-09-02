@@ -91,4 +91,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 		];
 		return $role;
 	}
+	public static function getExecutor()
+	{
+		/*$executors = User::findAll('role' => 'executor')
+		var_dump($executors);
+		return $executors;*/
+	}
 }
