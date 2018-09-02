@@ -3,7 +3,12 @@
 namespace app\models;
 
 use Yii;
-
+/** Состояния аварии */
+const STATE_NEW = 0; //новая
+const STATE_OPEN = 1; //в работе
+const STATE_COMPLETE = 2; //решена
+const STATE_CANCELED = 3; //отменена
+const STATE_CLOSED = 4; //закрыта
 /**
  * This is the model class for table "trouble".
  *
@@ -31,8 +36,10 @@ class Trouble extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['physical_address', 'executor', 'author', 'ip_address'], 'string'],
+            [['physical_address', 'executor', 'author', 'ip_address', 'comment'], 'string'],
             [['deadline'], 'safe'],
+	        [['deadline'], 'date', 'format'=>'php:Y-m-d'],
+	        [['deadline'], 'default', 'value' => date('Y-m-d')],
             [['stages'], 'string', 'max' => 255],
         ];
     }
@@ -49,7 +56,19 @@ class Trouble extends \yii\db\ActiveRecord
             'executor' => 'Executor',
             'author' => 'Author',
             'deadline' => 'Deadline',
+	        'comment' => 'Comment',
             'stages' => 'Stages',
         ];
     }
+	/*public static function getStages()
+	{
+		$stages = [
+			'create'=>'Создана',
+			'work'=>'В работе',
+			'finish'=>'Решена',
+			'canceled'=>'Отменена',
+			'closed'=>'Закрыта'
+		];
+		return $stages;
+	}*/
 }
